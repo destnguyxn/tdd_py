@@ -38,6 +38,7 @@ class NewVisitorTest(unittest.TestCase):
         # is tying fly-fishing lures)
         inputbox.send_keys('Buy peacock feathers')
         inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
 
 
         # There is still a text box inviting her to add another item. She
@@ -47,7 +48,6 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element(By.ID, 'id_list_table')
         rows = table.find_elements(By.TAG_NAME,'tr')
-        time.sleep(1)
 
         # The page updates again, and now shows both items on her list
 
