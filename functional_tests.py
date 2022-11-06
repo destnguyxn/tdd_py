@@ -1,4 +1,7 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
 import unittest
 
 class NewVisitorTest(unittest.TestCase):
@@ -7,6 +10,8 @@ class NewVisitorTest(unittest.TestCase):
 
     def setUp(self):
         self.browser = webdriver.Chrome()
+        # open test browser on other monitor for better view
+        self.browser.set_window_position(2000, 0)
 
     def tearDown(self):
         self.browser.quit()
@@ -32,12 +37,14 @@ class NewVisitorTest(unittest.TestCase):
         # She types "Buy a peacock feathers" into a text box (Edith's hobby
         # is tying fly-fishing lures)
         inputbox.send_keys(Keys.ENTER)
-        time.sleep(1)
+        time.sleep(5)
 
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_element_by_tag_name('tr')
+        table = self.browser.find_element(By.ID, 'id_list_table')
+        rows = table.find_elements(By.TAG_NAME,'tr')
+        print(table)
         self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows)
+            any(row.text == '1: Buy peacock feathers' for row in rows),
+            f"New to-do item did not appear in table. Contents were:\n{table.text}"
         )
 
         # There is still a text box inviting her to add another item. She
